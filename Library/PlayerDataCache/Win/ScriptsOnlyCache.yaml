@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CameraScript
+    - EnemyBehave
     - PlayerScript
     Unity.2D.Animation.Editor.dll:
     - UnityEditor.U2D.Animation.BoneGizmo
@@ -55,7 +56,19 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 62
       Script: {instanceID: 0}
+    - Class: 70
+      Script: {instanceID: 0}
+    - Class: 74
+      Script: {instanceID: 0}
     - Class: 81
+      Script: {instanceID: 0}
+    - Class: 82
+      Script: {instanceID: 0}
+    - Class: 83
+      Script: {instanceID: 0}
+    - Class: 91
+      Script: {instanceID: 0}
+    - Class: 95
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
@@ -72,11 +85,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 13948}
     - Class: 114
-      Script: {instanceID: 14396}
+      Script: {instanceID: 14086}
     - Class: 114
-      Script: {instanceID: 15030}
+      Script: {instanceID: 14398}
     - Class: 114
-      Script: {instanceID: 15064}
+      Script: {instanceID: 15032}
+    - Class: 114
+      Script: {instanceID: 15066}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -346,7 +361,7 @@ ScriptsOnlyBuild:
     className: ScrollRect
   - hash:
       serializedVersion: 2
-      Hash: b5774d9724d475343dcfab02e89221d6
+      Hash: bb922b0ffeeecf4ee9cb8fd841fbd084
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: PlayerScript
@@ -458,6 +473,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: TimelineAsset
+  - hash:
+      serializedVersion: 2
+      Hash: e08dc097b830ae769e9cdd9b04e903ac
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: EnemyBehave
   - hash:
       serializedVersion: 2
       Hash: 760787567e1b60d64a3e421ab83ee14a
@@ -599,5 +620,5 @@ ScriptsOnlyBuild:
   platform: 5
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/Alexander Williams/Desktop/Williams_Alexander_DIG3480_Tutorial2/Builds/New
+  playerPath: C:/Users/Alexander Williams/Desktop/Williams_Alexander_DIG3480_T2/Builds/New
     Unity Project.exe

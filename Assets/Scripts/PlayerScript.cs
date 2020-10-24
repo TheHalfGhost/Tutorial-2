@@ -13,14 +13,53 @@ public class PlayerScript : MonoBehaviour
 
     public Text win;
 
+    public Text lives;
+
+    public Text dead;
+
     private int scoreValue = 0;
+
+    private int livesValue = 3;
+
+    bool isDone = false;
+
+    public AudioClip musicClipOne;
+
+    public AudioClip musicClipTwo;
+
+    public AudioSource musicSource;
+
+    public AudioSource musicSource2;
+
+    Animator anim;
+
+    private bool facingRight = true;
+
+    private bool isOnGround;
+
+    public Transform groundcheck;
+
+    public float checkRadius;
+
+    public LayerMask allGround;
+
+
+
+
 
     // Start is called before the first frame update
     void Start()
     {
         rd2d = GetComponent<Rigidbody2D>();
-        score.text = scoreValue.ToString();
+        score.text = "Coins  " + scoreValue.ToString();
+        lives.text = "Lives  " + livesValue.ToString();
         win.text = "";
+        dead.text = "";
+        anim = GetComponent<Animator>();
+        {
+            musicSource.clip = musicClipOne;
+            musicSource.Play();
+        }
     }
 
     // Update is called once per frame
@@ -30,20 +69,67 @@ public class PlayerScript : MonoBehaviour
         float vertMovement = Input.GetAxis("Vertical");
 
         rd2d.AddForce(new Vector2(hozMovement * speed, vertMovement * speed));
-    }
 
+        if (facingRight == false && hozMovement > 0)
+        {
+            Flip();
+        }
+        else if (facingRight == true && hozMovement < 0)
+        {
+            Flip();
+        }
+
+        isOnGround = Physics2D.OverlapCircle(groundcheck.position, checkRadius, allGround);
+
+        if (isOnGround  ==  true)
+        {
+            anim.SetInteger("State", 0);
+        }
+        if (isOnGround == false)
+        {
+            anim.SetInteger("State", 2);
+        }
+        if (hozMovement <0 && isOnGround == true)
+        {
+            anim.SetInteger("State", 1);
+        }
+        if (hozMovement >0 && isOnGround == true)
+        {
+            anim.SetInteger("State", 1);
+        }
+
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.tag == "Coin")
         {
             scoreValue += 1;
-            score.text = scoreValue.ToString();
+            score.text = "Coins  " + scoreValue.ToString();
+            Destroy(collision.collider.gameObject);
+
+            if (scoreValue == 8)
+            {
+                win.text = "You Win! Game By Alexander Williams";
+                {
+                    musicSource.clip = musicClipOne;
+                    musicSource.Stop();
+                    musicSource2.clip = musicClipTwo;
+                    musicSource2.Play();
+
+                }
+            }
+        }
+        if (collision.collider.tag == "Enemy")
+        {
+            livesValue -= 1;
+            lives.text = "Lives  " + livesValue.ToString();
             Destroy(collision.collider.gameObject);
         }
     }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Ground")
+        if (collision.collider.tag == "Ground" && isOnGround)
         {
             if (Input.GetKey(KeyCode.W))
             {
@@ -51,15 +137,37 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
+
     void Update()
     {
         if (Input.GetKey("escape"))
         {
             Application.Quit();
         }
-        if (scoreValue >= 2)
+
+        if (livesValue <= 0)
         {
-            win.text = "You Win! By Alexander Williams";
+            dead.text = "You Lose";
+            transform.position = new Vector3(100.0f, 100.0f, 0.0f);
         }
+
+        if (!isDone)
+        {
+            if (scoreValue == 4)
+            {
+                transform.position = new Vector3(37.0f, 1.62f, 0.0f);
+                livesValue = 3;
+                lives.text = "Lives  " + livesValue.ToString();
+                isDone = true;
+            }
+         
+        }
+    }
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector2 Scaler = transform.localScale;
+        Scaler.x = Scaler.x * -1;
+        transform.localScale = Scaler;
     }
 }
